@@ -1,0 +1,2724 @@
+MS-BASIC INTERPRETER v4.0 - COMPLETE USER MANUAL & REFERENCE GUIDE
+================================================================================
+                    MS-BASIC INTERPRETER v4.0 FINAL EDITION
+                        COMPLETE USER MANUAL & REFERENCE
+================================================================================
+
+                           With Full Ctrl+C Support
+                    All Features Implemented and Debugged
+
+================================================================================
+                              TABLE OF CONTENTS
+================================================================================
+
+PART I: USER MANUAL
+-------------------
+1. Getting Started
+2. Basic Concepts
+3. Writing Your First Program
+4. Program Management
+5. Variables and Data Types
+6. Control Structures
+7. Arrays
+8. File Operations
+9. Error Handling
+10. Advanced Features
+
+PART II: COMMAND REFERENCE
+--------------------------
+11. System Commands
+12. Program Control Commands
+13. Input/Output Commands
+14. Mathematical Functions
+15. String Functions
+16. File I/O Commands
+17. Array Commands
+18. Error Handling Commands
+
+PART III: APPENDICES
+--------------------
+A. Advanced Programming Techniques
+B. Complete Sample Programs
+C. Troubleshooting Guide
+D. ASCII Reference
+E. Quick Reference Card
+F. Keyboard Shortcuts
+
+
+================================================================================
+                            PART I: USER MANUAL
+================================================================================
+
+
+================================================================================
+                          CHAPTER 1: GETTING STARTED
+================================================================================
+
+1.1 INSTALLATION
+----------------
+
+Prerequisites:
+- Go programming language (version 1.16 or higher)
+- Terminal or command prompt access
+- Text editor (optional, for editing .BAS files)
+
+Installation Steps:
+
+1. Save the interpreter source code as 'msbasic.go'
+
+2. Compile the interpreter:
+   $ go build -o msbasic msbasic.go
+
+3. Run the interpreter:
+   $ ./msbasic
+
+   On Windows:
+   > msbasic.exe
+
+4. You should see the welcome screen:
+
+   ╔════════════════════════════════════════════════════════════╗
+   ║   MS-BASIC Interpreter v4.0 FINAL (Complete & Debugged)   ║
+   ║   All features implemented: LOAD, SAVE, FILES, KILL, NAME ║
+   ║   Press Ctrl+C to stop running programs                   ║
+   ╚════════════════════════════════════════════════════════════╝
+
+   Commands: LOAD, SAVE, FILES, KILL, NAME, RUN, LIST, NEW, EXIT
+
+   >
+
+
+1.2 FIRST STEPS
+---------------
+
+The > prompt indicates the interpreter is ready for input.
+
+Try these commands:
+
+1. Print a message:
+   > PRINT "Hello, World!"
+   Hello, World!
+
+2. Do some math:
+   > PRINT 2 + 2
+    4
+
+3. Use variables:
+   > X = 10
+   > PRINT X * 5
+    50
+
+4. Exit the interpreter:
+   > EXIT
+
+
+1.3 STOPPING PROGRAMS
+---------------------
+
+**IMPORTANT: Ctrl+C Support**
+
+You can stop a running program at any time by pressing Ctrl+C (Control+C).
+This will interrupt the program and return you to the command prompt WITHOUT
+exiting the interpreter.
+
+Example:
+   > 10 FOR I = 1 TO 1000000
+   > 20 PRINT I
+   > 30 NEXT I
+   > RUN
+    1
+    2
+    3
+   (Press Ctrl+C)
+   *** BREAK ***
+   >
+
+The program stops immediately and you can continue using the interpreter.
+
+Other ways to stop programs:
+- STOP statement in your code
+- END statement in your code
+- Natural program completion
+
+
+1.4 INTERACTIVE MODE vs PROGRAM MODE
+-------------------------------------
+
+INTERACTIVE MODE:
+Commands are executed immediately when you press Enter.
+
+Example:
+   > PRINT "Immediate"
+   Immediate
+
+PROGRAM MODE:
+Lines starting with numbers are stored in memory for later execution.
+
+Example:
+   > 10 PRINT "Stored"
+   > 20 PRINT "For later"
+   > RUN
+   Stored
+   For later
+
+
+================================================================================
+                          CHAPTER 2: BASIC CONCEPTS
+================================================================================
+
+2.1 LINE NUMBERS
+----------------
+
+Programs are organized using line numbers (1-65535).
+
+Rules:
+- Line numbers must be positive integers
+- They don't need to be consecutive
+- Common practice: number by 10s (10, 20, 30...) to allow insertions
+
+Example:
+   10 PRINT "First"
+   20 PRINT "Second"
+   30 PRINT "Third"
+
+To insert a line between 10 and 20:
+   15 PRINT "Between first and second"
+
+To delete a line:
+   15
+
+To replace a line:
+   20 PRINT "New second line"
+
+
+2.2 COMMENTS
+------------
+
+Two ways to add comments:
+
+1. REM statement:
+   10 REM This is a comment
+   20 PRINT "Hello"
+
+2. Apostrophe ('):
+   10 ' This is also a comment
+   20 PRINT "Hello"
+
+Comments are ignored during execution.
+
+
+2.3 CASE SENSITIVITY
+--------------------
+
+MS-BASIC is NOT case sensitive for keywords and variable names.
+
+These are equivalent:
+   PRINT "Hello"
+   print "Hello"
+   PrInT "Hello"
+
+Variable names:
+   X = 10
+   x = 20    ' Same variable, now equals 20
+
+
+2.4 STATEMENT SEPARATORS
+-------------------------
+
+Multiple statements can be on one line using colons (:)
+
+Example:
+   10 X = 5 : Y = 10 : PRINT X + Y
+
+
+================================================================================
+                    CHAPTER 3: WRITING YOUR FIRST PROGRAM
+================================================================================
+
+3.1 HELLO WORLD PROGRAM
+------------------------
+
+Let's write a complete program:
+
+   > NEW
+   Ready
+   > 10 REM My First Program
+   > 20 PRINT "Hello, World!"
+   > 30 PRINT "Welcome to MS-BASIC"
+   > RUN
+   Hello, World!
+   Welcome to MS-BASIC
+
+To see your program:
+   > LIST
+   10 REM My First Program
+   20 PRINT "Hello, World!"
+   30 PRINT "Welcome to MS-BASIC"
+
+
+3.2 INTERACTIVE INPUT
+---------------------
+
+Get user input with INPUT:
+
+   > NEW
+   > 10 REM Greeting Program
+   > 20 INPUT "What is your name"; NAME$
+   > 30 PRINT "Hello, "; NAME$; "!"
+   > RUN
+   What is your name? John
+   Hello, John!
+
+
+3.3 SIMPLE CALCULATIONS
+-----------------------
+
+Calculator program:
+
+   > NEW
+   > 10 REM Simple Calculator
+   > 20 INPUT "Enter first number: ", A
+   > 30 INPUT "Enter second number: ", B
+   > 40 PRINT "Sum: "; A + B
+   > 50 PRINT "Difference: "; A - B
+   > 60 PRINT "Product: "; A * B
+   > 70 PRINT "Quotient: "; A / B
+   > RUN
+   Enter first number: 10
+   Enter second number: 5
+   Sum:  15
+   Difference:  5
+   Product:  50
+   Quotient:  2
+
+
+3.4 LOOPS
+---------
+
+Count to 10:
+
+   > NEW
+   > 10 REM Count to 10
+   > 20 FOR I = 1 TO 10
+   > 30 PRINT I
+   > 40 NEXT I
+   > RUN
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+
+
+================================================================================
+                      CHAPTER 4: PROGRAM MANAGEMENT
+================================================================================
+
+4.1 SYSTEM COMMANDS
+-------------------
+
+NEW - Clear memory and start fresh
+   > NEW
+   Ready
+
+LIST - Display the current program
+   > LIST
+   10 PRINT "Hello"
+   20 PRINT "World"
+
+RUN - Execute the program
+   > RUN
+   Hello
+   World
+
+EXIT - Quit the interpreter
+   > EXIT
+   Goodbye!
+
+
+4.2 FILE OPERATIONS
+-------------------
+
+SAVE - Save program to disk
+   > SAVE "MYPROG"
+   Saved: MYPROG.BAS
+
+   > SAVE "MYPROG.BAS"
+   Saved: MYPROG.BAS
+
+LOAD - Load program from disk
+   > LOAD "MYPROG"
+   Loaded: MYPROG.BAS
+
+FILES - List all BASIC programs
+   > FILES
+
+   BASIC Program Files:
+   --------------------
+   MYPROG.BAS              245 bytes
+   TEST.BAS                156 bytes
+   GAME.BAS               1024 bytes
+
+   3 file(s)
+
+KILL - Delete a file
+   > KILL "OLDPROG.BAS"
+   Deleted: OLDPROG.BAS
+
+NAME - Rename a file
+   > NAME "OLD.BAS" AS "NEW.BAS"
+   Renamed: OLD.BAS to NEW.BAS
+
+
+4.3 EDITING PROGRAMS
+--------------------
+
+To edit a line, retype it with the same line number:
+   > 20 PRINT "New text"
+
+To delete a line, type just the line number:
+   > 20
+
+To insert a line, use a number between existing lines:
+   > 15 PRINT "Inserted line"
+
+Best practice: Number lines by 10s (10, 20, 30...) to leave room for
+insertions.
+
+
+================================================================================
+                    CHAPTER 5: VARIABLES AND DATA TYPES
+================================================================================
+
+5.1 VARIABLE TYPES
+------------------
+
+MS-BASIC supports five data types:
+
+1. SINGLE-PRECISION (!) - Default floating point
+   Range: ±1.5E-45 to ±3.4E38
+   Example: X = 3.14159
+            Y! = 2.5
+
+2. DOUBLE-PRECISION (#) - High-precision floating point
+   Range: ±5.0E-324 to ±1.7E308
+   Example: PI# = 3.14159265358979
+
+3. INTEGER (%) - Whole numbers
+   Range: -32,768 to 32,767
+   Example: COUNT% = 100
+
+4. LONG INTEGER (&) - Large whole numbers
+   Range: -2,147,483,648 to 2,147,483,647
+   Example: BIGNUM& = 1000000
+
+5. STRING ($) - Text
+   Length: Up to available memory
+   Example: NAME$ = "John Smith"
+
+
+5.2 VARIABLE NAMING RULES
+--------------------------
+
+Rules:
+- Must start with a letter (A-Z)
+- Can contain letters, numbers, and periods
+- Maximum 40 characters
+- Type suffix (%, &, #, $, !) is part of the name
+- Not case sensitive
+
+Valid names:
+   X
+   TOTAL
+   FIRST.NAME$
+   COUNT%
+   AMOUNT#
+
+Invalid names:
+   9X          (starts with number)
+   MY-VAR      (contains hyphen)
+   FIRST NAME  (contains space)
+
+
+5.3 DEFAULT TYPES WITH DEFTYPE
+-------------------------------
+
+Set default type for variables starting with specific letters:
+
+   DEFINT A-Z      ' All variables are integers by default
+   DEFSTR S        ' Variables starting with S are strings
+   DEFSNG F-H      ' F, G, H variables are single-precision
+   DEFDBL D        ' D variables are double-precision
+   DEFLNG L        ' L variables are long integers
+
+Example:
+   10 DEFINT I-N
+   20 DEFSTR S
+   30 I = 10        ' Integer (because of DEFINT)
+   40 X = 3.14      ' Single-precision (default)
+   50 S = "Hello"   ' String (because of DEFSTR)
+
+
+5.4 NUMERIC CONSTANTS
+---------------------
+
+Decimal:
+   10
+   3.14159
+   -25.5
+
+Hexadecimal (base 16):
+   &HFF        ' 255 in decimal
+   &H10        ' 16 in decimal
+
+Octal (base 8):
+   &O77        ' 63 in decimal
+   &17         ' 15 in decimal (& prefix)
+
+Scientific notation:
+   1.5E10      ' 15,000,000,000
+   2.5E-3      ' 0.0025
+
+
+5.5 STRING CONSTANTS
+--------------------
+
+Enclosed in double quotes:
+   "Hello, World!"
+   "123 Main Street"
+   ""              ' Empty string
+
+Strings can contain any printable character.
+
+
+================================================================================
+                      CHAPTER 6: CONTROL STRUCTURES
+================================================================================
+
+6.1 IF-THEN-ELSE
+----------------
+
+Simple IF:
+   10 IF X > 10 THEN PRINT "X is large"
+
+IF-THEN-ELSE:
+   10 IF X > 10 THEN PRINT "Large" ELSE PRINT "Small"
+
+Multi-line IF:
+   10 IF X > 10 THEN
+   20     PRINT "X is large"
+   30     PRINT "Very large indeed"
+   40 ELSE
+   50     PRINT "X is small"
+   60 END IF
+
+IF with GOTO:
+   10 IF X > 10 THEN GOTO 100
+   20 PRINT "X is small"
+   30 END
+   100 PRINT "X is large"
+
+Nested IF:
+   10 IF X > 0 THEN
+   20     IF X < 10 THEN
+   30         PRINT "X is between 0 and 10"
+   40     END IF
+   50 END IF
+
+
+6.2 FOR-NEXT LOOPS
+------------------
+
+Basic FOR loop:
+   10 FOR I = 1 TO 10
+   20     PRINT I
+   30 NEXT I
+
+With STEP:
+   10 FOR I = 0 TO 100 STEP 10
+   20     PRINT I
+   30 NEXT I
+
+Counting backwards:
+   10 FOR I = 10 TO 1 STEP -1
+   20     PRINT I
+   30 NEXT I
+
+Nested loops:
+   10 FOR I = 1 TO 5
+   20     FOR J = 1 TO 5
+   30         PRINT I * J;
+   40     NEXT J
+   50     PRINT
+   60 NEXT I
+
+
+6.3 WHILE-WEND LOOPS
+--------------------
+
+Basic WHILE:
+   10 X = 1
+   20 WHILE X <= 10
+   30     PRINT X
+   40     X = X + 1
+   50 WEND
+
+With condition:
+   10 INPUT "Enter password: ", PASS$
+   20 WHILE PASS$ <> "SECRET"
+   30     PRINT "Wrong password!"
+   40     INPUT "Try again: ", PASS$
+   50 WEND
+   60 PRINT "Access granted"
+
+
+6.4 GOTO AND GOSUB
+------------------
+
+GOTO - Jump to a line number:
+   10 PRINT "Start"
+   20 GOTO 40
+   30 PRINT "Skipped"
+   40 PRINT "End"
+
+GOSUB - Call a subroutine:
+   10 GOSUB 100
+   20 PRINT "Back from subroutine"
+   30 END
+   100 REM Subroutine
+   110 PRINT "In subroutine"
+   120 RETURN
+
+Multiple subroutines:
+   10 GOSUB 100
+   20 GOSUB 200
+   30 END
+   100 PRINT "First subroutine"
+   110 RETURN
+   200 PRINT "Second subroutine"
+   210 RETURN
+
+
+6.5 ON-GOTO and ON-GOSUB
+------------------------
+
+ON-GOTO - Computed GOTO:
+   10 INPUT "Choose 1, 2, or 3: ", N
+   20 ON N GOTO 100, 200, 300
+   30 END
+   100 PRINT "You chose 1": END
+   200 PRINT "You chose 2": END
+   300 PRINT "You chose 3": END
+
+ON-GOSUB - Computed GOSUB:
+   10 INPUT "Menu choice: ", N
+   20 ON N GOSUB 100, 200, 300
+   30 END
+   100 PRINT "Option 1": RETURN
+   200 PRINT "Option 2": RETURN
+   300 PRINT "Option 3": RETURN
+
+
+6.6 COMPARISON OPERATORS
+------------------------
+
+=       Equal to
+<>      Not equal to
+<       Less than
+>       Greater than
+<=      Less than or equal to
+>=      Greater than or equal to
+
+Examples:
+   IF X = 10 THEN PRINT "Equal"
+   IF X <> 10 THEN PRINT "Not equal"
+   IF X < 10 THEN PRINT "Less"
+   IF X > 10 THEN PRINT "Greater"
+   IF X <= 10 THEN PRINT "Less or equal"
+   IF X >= 10 THEN PRINT "Greater or equal"
+
+
+6.7 LOGICAL OPERATORS
+---------------------
+
+AND     Logical AND
+OR      Logical OR
+NOT     Logical NOT
+XOR     Exclusive OR
+EQV     Equivalence
+IMP     Implication
+
+Examples:
+   10 IF X > 0 AND X < 10 THEN PRINT "In range"
+   20 IF X < 0 OR X > 100 THEN PRINT "Out of range"
+   30 IF NOT (X = 0) THEN PRINT "Not zero"
+
+Truth tables:
+
+AND:  -1 AND -1 = -1    (true AND true = true)
+      -1 AND  0 =  0    (true AND false = false)
+       0 AND -1 =  0    (false AND true = false)
+       0 AND  0 =  0    (false AND false = false)
+
+OR:   -1 OR -1 = -1     (true OR true = true)
+      -1 OR  0 = -1     (true OR false = true)
+       0 OR -1 = -1     (false OR true = true)
+       0 OR  0 =  0     (false OR false = false)
+
+NOT:  NOT -1 = 0        (NOT true = false)
+      NOT  0 = -1       (NOT false = true)
+
+
+================================================================================
+                            CHAPTER 7: ARRAYS
+================================================================================
+
+7.1 DECLARING ARRAYS
+--------------------
+
+Use DIM to declare arrays:
+
+   DIM A(10)           ' Single-precision array, 11 elements (0-10)
+   DIM B%(100)         ' Integer array, 101 elements
+   DIM NAMES$(50)      ' String array, 51 elements
+   DIM VALUES#(25)     ' Double-precision array, 26 elements
+
+By default, arrays start at index 0.
+
+
+7.2 OPTION BASE
+---------------
+
+Change the starting index:
+
+   OPTION BASE 1       ' Arrays start at 1
+   DIM A(10)           ' Now has elements 1-10 (10 elements)
+
+   OPTION BASE 0       ' Arrays start at 0 (default)
+   DIM B(10)           ' Has elements 0-10 (11 elements)
+
+OPTION BASE must be used before any DIM statements.
+
+
+7.3 USING ARRAYS
+----------------
+
+Assign values:
+   10 DIM SCORES(5)
+   20 SCORES(0) = 85
+   30 SCORES(1) = 92
+   40 SCORES(2) = 78
+   50 SCORES(3) = 95
+   60 SCORES(4) = 88
+   70 SCORES(5) = 91
+
+Access values:
+   80 PRINT SCORES(0)
+   90 TOTAL = SCORES(0) + SCORES(1) + SCORES(2)
+
+Loop through array:
+   10 DIM A(10)
+   20 FOR I = 0 TO 10
+   30     A(I) = I * 2
+   40 NEXT I
+   50 FOR I = 0 TO 10
+   60     PRINT A(I)
+   70 NEXT I
+
+
+7.4 STRING ARRAYS
+-----------------
+
+   10 DIM NAMES$(5)
+   20 NAMES$(0) = "Alice"
+   30 NAMES$(1) = "Bob"
+   40 NAMES$(2) = "Charlie"
+   50 FOR I = 0 TO 2
+   60     PRINT NAMES$(I)
+   70 NEXT I
+
+
+7.5 ARRAY BOUNDS
+----------------
+
+LBOUND - Get lower bound:
+   10 DIM A(10)
+   20 PRINT LBOUND(A)      ' Prints 0 (or 1 with OPTION BASE 1)
+
+UBOUND - Get upper bound:
+   10 DIM A(10)
+   20 PRINT UBOUND(A)      ' Prints 10
+
+
+7.6 ERASING ARRAYS
+------------------
+
+Free memory used by arrays:
+
+   10 DIM TEMP(1000)
+   20 ' Use the array...
+   30 ERASE TEMP           ' Free the memory
+
+You can erase multiple arrays:
+   ERASE A, B, C
+
+
+================================================================================
+                       CHAPTER 8: FILE OPERATIONS
+================================================================================
+
+8.1 OPENING FILES
+-----------------
+
+OPEN "filename" FOR mode AS #filenumber
+
+Modes:
+- INPUT   : Read from file
+- OUTPUT  : Write to file (creates new or overwrites)
+- APPEND  : Add to end of file
+
+Examples:
+   OPEN "DATA.TXT" FOR INPUT AS #1
+   OPEN "OUTPUT.TXT" FOR OUTPUT AS #2
+   OPEN "LOG.TXT" FOR APPEND AS #3
+
+
+8.2 CLOSING FILES
+-----------------
+
+Close a specific file:
+   CLOSE #1
+
+Close multiple files:
+   CLOSE #1, #2, #3
+
+Close all files:
+   CLOSE
+
+
+8.3 WRITING TO FILES
+--------------------
+
+WRITE # - Write data to file:
+   10 OPEN "DATA.TXT" FOR OUTPUT AS #1
+   20 WRITE #1, "John", 25, 50000
+   30 WRITE #1, "Jane", 30, 60000
+   40 CLOSE #1
+
+PRINT # - Print to file:
+   10 OPEN "REPORT.TXT" FOR OUTPUT AS #1
+   20 PRINT #1, "Sales Report"
+   30 PRINT #1, "============"
+   40 PRINT #1, "Total: $"; 1234.56
+   50 CLOSE #1
+
+
+8.4 READING FROM FILES
+----------------------
+
+INPUT # - Read data from file:
+   10 OPEN "DATA.TXT" FOR INPUT AS #1
+   20 INPUT #1, NAME$, AGE, SALARY
+   30 PRINT NAME$; AGE; SALARY
+   40 CLOSE #1
+
+LINE INPUT # - Read entire line:
+   10 OPEN "TEXT.TXT" FOR INPUT AS #1
+   20 LINE INPUT #1, LINE$
+   30 PRINT LINE$
+   40 CLOSE #1
+
+
+8.5 FILE FUNCTIONS
+------------------
+
+EOF(n) - Check if end of file:
+   10 OPEN "DATA.TXT" FOR INPUT AS #1
+   20 WHILE NOT EOF(1)
+   30     LINE INPUT #1, LINE$
+   40     PRINT LINE$
+   50 WEND
+   60 CLOSE #1
+
+LOF(n) - Get file length:
+   10 OPEN "DATA.TXT" FOR INPUT AS #1
+   20 PRINT "File size:"; LOF(1); "bytes"
+   30 CLOSE #1
+
+LOC(n) - Get current position:
+   10 OPEN "DATA.TXT" FOR INPUT AS #1
+   20 PRINT "Current line:"; LOC(1)
+   30 CLOSE #1
+
+
+8.6 COMPLETE FILE EXAMPLE
+--------------------------
+
+Write to file:
+   10 REM Write data to file
+   20 OPEN "CONTACTS.TXT" FOR OUTPUT AS #1
+   30 FOR I = 1 TO 3
+   40     INPUT "Name: ", N$
+   50     INPUT "Phone: ", P$
+   60     WRITE #1, N$, P$
+   70 NEXT I
+   80 CLOSE #1
+   90 PRINT "Data saved!"
+
+Read from file:
+   10 REM Read data from file
+   20 OPEN "CONTACTS.TXT" FOR INPUT AS #1
+   30 WHILE NOT EOF(1)
+   40     INPUT #1, N$, P$
+   50     PRINT N$; " - "; P$
+   60 WEND
+   70 CLOSE #1
+
+
+================================================================================
+                       CHAPTER 9: ERROR HANDLING
+================================================================================
+
+9.1 ON ERROR GOTO
+-----------------
+
+Enable error handling:
+   10 ON ERROR GOTO 1000
+   20 ' Your code here
+   30 ' ...
+   40 END
+   1000 REM Error handler
+   1010 PRINT "Error occurred!"
+   1020 END
+
+Disable error handling:
+   ON ERROR GOTO 0
+
+
+9.2 ERROR FUNCTIONS
+-------------------
+
+ERR - Get error number:
+   1000 PRINT "Error number:"; ERR
+
+ERL - Get line number where error occurred:
+   1000 PRINT "Error at line:"; ERL
+
+Common error codes:
+   2   - Syntax error
+   5   - Illegal function call
+   6   - Overflow
+   7   - Out of memory
+   9   - Subscript out of range
+   11  - Division by zero
+   13  - Type mismatch
+   53  - File not found
+
+
+9.3 RESUME
+----------
+
+RESUME - Return to line that caused error:
+   1000 PRINT "Error occurred"
+   1010 RESUME
+
+RESUME NEXT - Continue with next line:
+   1000 PRINT "Error occurred, continuing..."
+   1010 RESUME NEXT
+
+RESUME line - Continue at specific line:
+   1000 PRINT "Error occurred"
+   1010 RESUME 100
+
+
+9.4 ERROR HANDLING EXAMPLE
+---------------------------
+
+   10 ON ERROR GOTO 1000
+   20 INPUT "Enter a number: ", N
+   30 RESULT = 100 / N
+   40 PRINT "Result:"; RESULT
+   50 END
+   1000 REM Error handler
+   1010 IF ERR = 11 THEN
+   1020     PRINT "Cannot divide by zero!"
+   1030     RESUME 20
+   1040 ELSE
+   1050     PRINT "Error"; ERR; "at line"; ERL
+   1060     END
+   1070 END IF
+
+
+================================================================================
+                      CHAPTER 10: ADVANCED FEATURES
+================================================================================
+
+10.1 DATA AND READ
+------------------
+
+Store data in program:
+   10 DATA 10, 20, 30, 40, 50
+   20 DATA "Alice", "Bob", "Charlie"
+
+Read data:
+   10 DATA 10, 20, 30
+   20 READ A, B, C
+   30 PRINT A; B; C
+
+RESTORE - Reset data pointer:
+   10 DATA 1, 2, 3
+   20 READ A
+   30 RESTORE
+   40 READ B
+   50 PRINT A; B    ' Prints 1 1
+
+
+10.2 RANDOMIZE
+--------------
+
+Seed random number generator:
+   RANDOMIZE        ' Use current time
+   RANDOMIZE 12345  ' Use specific seed
+
+
+10.3 SWAP
+---------
+
+Exchange values of two variables:
+   10 A = 10
+   20 B = 20
+   30 SWAP A, B
+   40 PRINT A; B    ' Prints 20 10
+
+
+10.4 MEMORY OPERATIONS
+----------------------
+
+PEEK - Read memory location:
+   VALUE = PEEK(1000)
+
+POKE - Write to memory location:
+   POKE 1000, 255
+
+FRE - Get free memory:
+   PRINT "Free memory:"; FRE(0)
+
+
+10.5 CURSOR CONTROL
+-------------------
+
+CLS - Clear screen:
+   CLS
+
+LOCATE - Position cursor:
+   LOCATE 10, 20    ' Row 10, Column 20
+   PRINT "Here"
+
+POS - Get cursor column:
+   X = POS(0)
+
+
+10.6 TIME AND DATE
+------------------
+
+TIMER - Seconds since midnight:
+   START = TIMER
+   ' Do something
+   ELAPSED = TIMER - START
+   PRINT "Elapsed:"; ELAPSED; "seconds"
+
+TIME$ - Current time:
+   PRINT TIME$      ' Prints HH:MM:SS
+
+DATE$ - Current date:
+   PRINT DATE$      ' Prints MM-DD-YYYY
+
+
+================================================================================
+                      PART II: COMMAND REFERENCE
+================================================================================
+
+
+================================================================================
+                        CHAPTER 11: SYSTEM COMMANDS
+================================================================================
+
+NEW
+---
+Syntax: NEW
+Purpose: Clear program and variables from memory
+Example:
+   > NEW
+   Ready
+
+Notes:
+- Closes all open files
+- Clears all variables
+- Erases program from memory
+- Does not affect files on disk
+
+
+LIST
+----
+Syntax: LIST [start[-end]]
+Purpose: Display program lines
+Examples:
+   LIST              ' List entire program
+   LIST 100          ' List line 100
+   LIST 100-200      ' List lines 100 to 200
+
+Notes:
+- Lines are displayed in numerical order
+- Shows line numbers and code
+
+
+RUN
+---
+Syntax: RUN [line]
+Purpose: Execute the program
+Examples:
+   RUN               ' Run from first line
+   RUN 100           ' Run starting at line 100
+
+Notes:
+- Clears all variables before running
+- Closes all open files
+- Press Ctrl+C to stop execution
+
+
+EXIT
+----
+Syntax: EXIT
+Purpose: Quit the interpreter
+Example:
+   > EXIT
+   Goodbye!
+
+Notes:
+- Closes all open files
+- Does not save program automatically
+
+
+LOAD
+----
+Syntax: LOAD "filename"
+Purpose: Load program from disk
+Examples:
+   LOAD "MYPROG"
+   LOAD "MYPROG.BAS"
+
+Notes:
+- Clears current program first
+- .BAS extension added if not specified
+- File must exist or error occurs
+
+
+SAVE
+----
+Syntax: SAVE "filename"
+Purpose: Save program to disk
+Examples:
+   SAVE "MYPROG"
+   SAVE "MYPROG.BAS"
+
+Notes:
+- Overwrites existing file
+- .BAS extension added if not specified
+- Creates new file if doesn't exist
+
+
+FILES
+-----
+Syntax: FILES
+Purpose: List all .BAS files in current directory
+Example:
+   > FILES
+
+   BASIC Program Files:
+   --------------------
+   GAME.BAS                1024 bytes
+   TEST.BAS                 256 bytes
+
+   2 file(s)
+
+
+KILL
+----
+Syntax: KILL "filename"
+Purpose: Delete a file
+Example:
+   KILL "OLDPROG.BAS"
+
+Notes:
+- File is permanently deleted
+- No confirmation prompt
+- Error if file doesn't exist
+
+
+NAME
+----
+Syntax: NAME "oldname" AS "newname"
+Purpose: Rename a file
+Example:
+   NAME "OLD.BAS" AS "NEW.BAS"
+
+Notes:
+- Overwrites newname if it exists
+- Error if oldname doesn't exist
+
+
+================================================================================
+                   CHAPTER 12: PROGRAM CONTROL COMMANDS
+================================================================================
+
+GOTO
+----
+Syntax: GOTO line
+Purpose: Jump to specified line
+Example:
+   10 PRINT "Start"
+   20 GOTO 40
+   30 PRINT "Skipped"
+   40 PRINT "End"
+
+Notes:
+- Unconditional jump
+- Line must exist
+
+
+GOSUB
+-----
+Syntax: GOSUB line
+Purpose: Call a subroutine
+Example:
+   10 GOSUB 100
+   20 PRINT "Back"
+   30 END
+   100 PRINT "In subroutine"
+   110 RETURN
+
+Notes:
+- Must have matching RETURN
+- Can nest subroutines
+
+
+RETURN
+------
+Syntax: RETURN
+Purpose: Return from subroutine
+Example:
+   100 PRINT "Subroutine"
+   110 RETURN
+
+Notes:
+- Returns to line after GOSUB
+- Error if no matching GOSUB
+
+
+ON GOTO
+-------
+Syntax: ON expression GOTO line1, line2, ...
+Purpose: Computed GOTO
+Example:
+   10 INPUT "Choice (1-3): ", N
+   20 ON N GOTO 100, 200, 300
+
+Notes:
+- Expression must be 1, 2, 3, etc.
+- If out of range, continues to next line
+
+
+ON GOSUB
+--------
+Syntax: ON expression GOSUB line1, line2, ...
+Purpose: Computed GOSUB
+Example:
+   10 INPUT "Menu: ", N
+   20 ON N GOSUB 100, 200, 300
+
+Notes:
+- Similar to ON GOTO but calls subroutines
+- Each subroutine must RETURN
+
+
+IF-THEN-ELSE
+------------
+Syntax: IF condition THEN statement [ELSE statement]
+Purpose: Conditional execution
+Examples:
+   IF X > 10 THEN PRINT "Large"
+   IF X > 10 THEN PRINT "Large" ELSE PRINT "Small"
+   IF X > 10 THEN GOTO 100
+   IF X > 10 THEN GOSUB 100 ELSE GOSUB 200
+
+Notes:
+- Condition: -1 = true, 0 = false
+- Can use any comparison or logical operator
+
+
+FOR-NEXT
+--------
+Syntax: FOR variable = start TO end [STEP increment]
+        NEXT [variable]
+Purpose: Loop with counter
+Examples:
+   FOR I = 1 TO 10
+       PRINT I
+   NEXT I
+
+   FOR I = 10 TO 1 STEP -1
+       PRINT I
+   NEXT I
+
+Notes:
+- Default STEP is 1
+- STEP can be negative
+- Loop executes at least once if start <= end
+
+
+WHILE-WEND
+----------
+Syntax: WHILE condition
+        WEND
+Purpose: Loop while condition is true
+Example:
+   10 X = 1
+   20 WHILE X <= 10
+   30     PRINT X
+   40     X = X + 1
+   50 WEND
+
+Notes:
+- Condition checked before each iteration
+- May not execute at all if initially false
+
+
+END
+---
+Syntax: END
+Purpose: Terminate program
+Example:
+   10 PRINT "Done"
+   20 END
+
+Notes:
+- Closes all files
+- Stops execution
+- Optional at end of program
+
+
+STOP
+----
+Syntax: STOP
+Purpose: Halt program with message
+Example:
+   10 PRINT "Stopping"
+   20 STOP
+
+Output:
+   Stopping
+   BREAK
+
+Notes:
+- Similar to END but displays "BREAK"
+- Used for debugging
+
+
+================================================================================
+                    CHAPTER 13: INPUT/OUTPUT COMMANDS
+================================================================================
+
+PRINT
+-----
+Syntax: PRINT [expression] [; | ,] [expression] ...
+Shortcut: ?
+Purpose: Display output
+Examples:
+   PRINT "Hello"
+   PRINT X
+   PRINT "X ="; X
+   PRINT A; B; C
+   PRINT A, B, C        ' Tab-separated
+   PRINT "No newline";  ' Suppress newline
+
+Notes:
+- Semicolon (;) concatenates output
+- Comma (,) tabs to next column (14-char columns)
+- Trailing ; or , suppresses newline
+
+
+INPUT
+-----
+Syntax: INPUT ["prompt";] variable [, variable ...]
+Purpose: Get user input
+Examples:
+   INPUT X
+   INPUT "Enter name: "; NAME$
+   INPUT "X, Y: "; X, Y
+
+Notes:
+- Displays ? if no prompt
+- Multiple variables separated by commas
+- String input doesn't need quotes
+
+
+LINE INPUT
+----------
+Syntax: LINE INPUT ["prompt";] variable$
+Purpose: Input entire line as string
+Example:
+   LINE INPUT "Enter text: "; TEXT$
+
+Notes:
+- Reads entire line including commas
+- Variable must be string type
+- Doesn't stop at commas like INPUT
+
+
+CLS
+---
+Syntax: CLS
+Purpose: Clear screen
+Example:
+   CLS
+
+Notes:
+- Clears entire screen
+- Moves cursor to top-left
+
+
+LOCATE
+------
+Syntax: LOCATE row, column
+Purpose: Position cursor
+Example:
+   LOCATE 10, 20
+   PRINT "Here"
+
+Notes:
+- Row and column start at 1
+- Screen typically 25 rows × 80 columns
+
+
+================================================================================
+                   CHAPTER 14: MATHEMATICAL FUNCTIONS
+================================================================================
+
+ABS
+---
+Syntax: ABS(x)
+Purpose: Absolute value
+Example:
+   PRINT ABS(-5)        ' Prints 5
+   PRINT ABS(3.7)       ' Prints 3.7
+
+
+INT
+---
+Syntax: INT(x)
+Purpose: Largest integer <= x
+Example:
+   PRINT INT(3.7)       ' Prints 3
+   PRINT INT(-3.7)      ' Prints -4
+
+
+FIX
+---
+Syntax: FIX(x)
+Purpose: Truncate to integer
+Example:
+   PRINT FIX(3.7)       ' Prints 3
+   PRINT FIX(-3.7)      ' Prints -3
+
+
+SGN
+---
+Syntax: SGN(x)
+Purpose: Sign of number
+Returns: -1 if negative, 0 if zero, 1 if positive
+Example:
+   PRINT SGN(-5)        ' Prints -1
+   PRINT SGN(0)         ' Prints 0
+   PRINT SGN(5)         ' Prints 1
+
+
+SQR
+---
+Syntax: SQR(x)
+Purpose: Square root
+Example:
+   PRINT SQR(16)        ' Prints 4
+   PRINT SQR(2)         ' Prints 1.414...
+
+Notes:
+- Error if x < 0
+
+
+SIN, COS, TAN
+-------------
+Syntax: SIN(x), COS(x), TAN(x)
+Purpose: Trigonometric functions
+Example:
+   PRINT SIN(0)         ' Prints 0
+   PRINT COS(0)         ' Prints 1
+
+Notes:
+- Argument in radians
+- To convert degrees: radians = degrees * π / 180
+
+
+ATN
+---
+Syntax: ATN(x)
+Purpose: Arctangent
+Returns: Angle in radians
+Example:
+   PRINT ATN(1)         ' Prints 0.785... (π/4)
+
+
+EXP
+---
+Syntax: EXP(x)
+Purpose: e raised to power x
+Example:
+   PRINT EXP(1)         ' Prints 2.718... (e)
+   PRINT EXP(0)         ' Prints 1
+
+
+LOG
+---
+Syntax: LOG(x)
+Purpose: Natural logarithm (base e)
+Example:
+   PRINT LOG(2.718)     ' Prints ~1
+
+Notes:
+- Error if x <= 0
+
+
+RND
+---
+Syntax: RND[(x)]
+Purpose: Random number
+Returns: Random number between 0 and 1
+Example:
+   PRINT RND            ' Random 0-1
+   PRINT INT(RND * 10)  ' Random 0-9
+   PRINT INT(RND * 100) + 1  ' Random 1-100
+
+Notes:
+- RND(negative) reseeds generator
+- Use RANDOMIZE for different sequence each run
+
+
+CINT, CLNG, CSNG, CDBL
+----------------------
+Syntax: CINT(x), CLNG(x), CSNG(x), CDBL(x)
+Purpose: Type conversion
+Example:
+   I% = CINT(3.7)       ' Converts to integer (4)
+   L& = CLNG(1000000)   ' Converts to long
+   S! = CSNG(X#)        ' Converts to single
+   D# = CDBL(X!)        ' Converts to double
+
+
+================================================================================
+                     CHAPTER 15: STRING FUNCTIONS
+================================================================================
+
+LEN
+---
+Syntax: LEN(string$)
+Purpose: Length of string
+Example:
+   PRINT LEN("Hello")   ' Prints 5
+   PRINT LEN("")        ' Prints 0
+
+
+LEFT$
+-----
+Syntax: LEFT$(string$, n)
+Purpose: Leftmost n characters
+Example:
+   PRINT LEFT$("Hello", 3)      ' Prints "Hel"
+
+
+RIGHT$
+------
+Syntax: RIGHT$(string$, n)
+Purpose: Rightmost n characters
+Example:
+   PRINT RIGHT$("Hello", 3)     ' Prints "llo"
+
+
+MID$
+----
+Syntax: MID$(string$, start[, length])
+Purpose: Substring
+Example:
+   PRINT MID$("Hello", 2, 3)    ' Prints "ell"
+   PRINT MID$("Hello", 2)       ' Prints "ello"
+
+Notes:
+- Start position begins at 1
+- If length omitted, returns rest of string
+
+
+INSTR
+-----
+Syntax: INSTR([start,] string1$, string2$)
+Purpose: Find substring
+Returns: Position of string2$ in string1$, or 0 if not found
+Example:
+   PRINT INSTR("Hello", "ll")   ' Prints 3
+   PRINT INSTR("Hello", "x")    ' Prints 0
+   PRINT INSTR(3, "Hello", "l") ' Prints 3
+
+
+CHR$
+----
+Syntax: CHR$(code)
+Purpose: Character from ASCII code
+Example:
+   PRINT CHR$(65)       ' Prints "A"
+   PRINT CHR$(13)       ' Carriage return
+
+
+ASC
+---
+Syntax: ASC(string$)
+Purpose: ASCII code of first character
+Example:
+   PRINT ASC("A")       ' Prints 65
+   PRINT ASC("Hello")   ' Prints 72 (H)
+
+
+STR$
+----
+Syntax: STR$(number)
+Purpose: Convert number to string
+Example:
+   S$ = STR$(123)       ' S$ = " 123"
+   S$ = STR$(-45)       ' S$ = "-45"
+
+Notes:
+- Positive numbers have leading space
+- Negative numbers have leading minus
+
+
+VAL
+---
+Syntax: VAL(string$)
+Purpose: Convert string to number
+Example:
+   PRINT VAL("123")     ' Prints 123
+   PRINT VAL("3.14")    ' Prints 3.14
+   PRINT VAL("12X")     ' Prints 12
+
+Notes:
+- Stops at first non-numeric character
+- Returns 0 for non-numeric strings
+
+
+STRING$
+-------
+Syntax: STRING$(n, char$)
+        STRING$(n, code)
+Purpose: Repeat character n times
+Example:
+   PRINT STRING$(5, "*")        ' Prints "*****"
+   PRINT STRING$(10, 65)        ' Prints "AAAAAAAAAA"
+
+
+SPACE$
+------
+Syntax: SPACE$(n)
+Purpose: n space characters
+Example:
+   PRINT "A" + SPACE$(5) + "B"  ' Prints "A     B"
+
+
+LCASE$
+------
+Syntax: LCASE$(string$)
+Purpose: Convert to lowercase
+Example:
+   PRINT LCASE$("HELLO")        ' Prints "hello"
+
+
+UCASE$
+------
+Syntax: UCASE$(string$)
+Purpose: Convert to uppercase
+Example:
+   PRINT UCASE$("hello")        ' Prints "HELLO"
+
+
+HEX$
+----
+Syntax: HEX$(number)
+Purpose: Convert to hexadecimal string
+Example:
+   PRINT HEX$(255)      ' Prints "FF"
+   PRINT HEX$(16)       ' Prints "10"
+
+
+OCT$
+----
+Syntax: OCT$(number)
+Purpose: Convert to octal string
+Example:
+   PRINT OCT$(8)        ' Prints "10"
+   PRINT OCT$(64)       ' Prints "100"
+
+
+TIME$
+-----
+Syntax: TIME$
+Purpose: Current time
+Returns: String in format "HH:MM:SS"
+Example:
+   PRINT TIME$          ' Prints "14:30:25"
+
+
+DATE$
+-----
+Syntax: DATE$
+Purpose: Current date
+Returns: String in format "MM-DD-YYYY"
+Example:
+   PRINT DATE$          ' Prints "12-25-2024"
+
+
+================================================================================
+                    CHAPTER 16: FILE I/O COMMANDS
+================================================================================
+
+OPEN
+----
+Syntax: OPEN "filename" FOR mode AS #filenumber
+Modes: INPUT, OUTPUT, APPEND
+Purpose: Open file for reading or writing
+Examples:
+   OPEN "DATA.TXT" FOR INPUT AS #1
+   OPEN "OUT.TXT" FOR OUTPUT AS #2
+   OPEN "LOG.TXT" FOR APPEND AS #3
+
+Notes:
+- INPUT: Read from existing file
+- OUTPUT: Create new or overwrite existing
+- APPEND: Add to end of existing file
+- File numbers 1-255
+
+
+CLOSE
+-----
+Syntax: CLOSE [#filenumber [, #filenumber ...]]
+Purpose: Close open files
+Examples:
+   CLOSE #1             ' Close file #1
+   CLOSE #1, #2         ' Close files #1 and #2
+   CLOSE                ' Close all files
+
+
+INPUT #
+-------
+Syntax: INPUT #filenumber, variable [, variable ...]
+Purpose: Read data from file
+Example:
+   10 OPEN "DATA.TXT" FOR INPUT AS #1
+   20 INPUT #1, NAME$, AGE, SALARY
+   30 CLOSE #1
+
+
+LINE INPUT #
+------------
+Syntax: LINE INPUT #filenumber, variable$
+Purpose: Read entire line from file
+Example:
+   10 OPEN "TEXT.TXT" FOR INPUT AS #1
+   20 LINE INPUT #1, LINE$
+   30 PRINT LINE$
+   40 CLOSE #1
+
+
+PRINT #
+-------
+Syntax: PRINT #filenumber, [expression] [; | ,] ...
+Purpose: Write to file
+Example:
+   10 OPEN "OUT.TXT" FOR OUTPUT AS #1
+   20 PRINT #1, "Hello"
+   30 PRINT #1, "X ="; 123
+   40 CLOSE #1
+
+
+WRITE #
+-------
+Syntax: WRITE #filenumber, expression [, expression ...]
+Purpose: Write comma-separated data
+Example:
+   10 OPEN "DATA.TXT" FOR OUTPUT AS #1
+   20 WRITE #1, "John", 25, 50000
+   30 CLOSE #1
+
+Output in file:
+   "John",25,50000
+
+
+EOF
+---
+Syntax: EOF(filenumber)
+Purpose: Check if at end of file
+Returns: -1 if at end, 0 otherwise
+Example:
+   10 OPEN "DATA.TXT" FOR INPUT AS #1
+   20 WHILE NOT EOF(1)
+   30     LINE INPUT #1, L$
+   40     PRINT L$
+   50 WEND
+   60 CLOSE #1
+
+
+LOF
+---
+Syntax: LOF(filenumber)
+Purpose: Get file length in bytes
+Example:
+   10 OPEN "DATA.TXT" FOR INPUT AS #1
+   20 PRINT "Size:"; LOF(1); "bytes"
+   30 CLOSE #1
+
+
+LOC
+---
+Syntax: LOC(filenumber)
+Purpose: Get current line number
+Example:
+   10 OPEN "DATA.TXT" FOR INPUT AS #1
+   20 LINE INPUT #1, L$
+   30 PRINT "Line:"; LOC(1)
+   40 CLOSE #1
+
+
+================================================================================
+                      CHAPTER 17: ARRAY COMMANDS
+================================================================================
+
+DIM
+---
+Syntax: DIM array(size) [, array(size) ...]
+Purpose: Declare array
+Examples:
+   DIM A(10)            ' Single-precision, 11 elements (0-10)
+   DIM B%(100)          ' Integer, 101 elements
+   DIM C$(50)           ' String, 51 elements
+   DIM X#(25), Y#(25)   ' Two double arrays
+
+Notes:
+- Default base is 0 (use OPTION BASE to change)
+- Size is the highest index
+- Can specify type with suffix
+
+
+OPTION BASE
+-----------
+Syntax: OPTION BASE n
+Purpose: Set array starting index (0 or 1)
+Example:
+   OPTION BASE 1
+   DIM A(10)            ' Elements 1-10 (10 elements)
+
+Notes:
+- Must be before any DIM statements
+- Only 0 or 1 allowed
+
+
+LBOUND
+------
+Syntax: LBOUND(array)
+Purpose: Get lower bound of array
+Example:
+   DIM A(10)
+   PRINT LBOUND(A)      ' Prints 0 (or 1 with OPTION BASE 1)
+
+
+UBOUND
+------
+Syntax: UBOUND(array)
+Purpose: Get upper bound of array
+Example:
+   DIM A(10)
+   PRINT UBOUND(A)      ' Prints 10
+
+
+ERASE
+-----
+Syntax: ERASE array [, array ...]
+Purpose: Free array memory
+Example:
+   DIM TEMP(1000)
+   ' Use array...
+   ERASE TEMP           ' Free memory
+
+Notes:
+- Can erase multiple arrays
+- Array must be re-DIMmed before reuse
+
+
+================================================================================
+                  CHAPTER 18: ERROR HANDLING COMMANDS
+================================================================================
+
+ON ERROR GOTO
+-------------
+Syntax: ON ERROR GOTO line
+Purpose: Enable error handling
+Example:
+   10 ON ERROR GOTO 1000
+   20 ' Program code
+   1000 PRINT "Error!"
+
+Notes:
+- ON ERROR GOTO 0 disables error handling
+- Only one error handler active at a time
+
+
+ERROR
+-----
+Syntax: ERROR code
+Purpose: Simulate error
+Example:
+   ERROR 11             ' Simulate division by zero
+
+
+ERR
+---
+Syntax: ERR
+Purpose: Get error code
+Example:
+   1000 PRINT "Error code:"; ERR
+
+Common error codes:
+   2   Syntax error
+   5   Illegal function call
+   6   Overflow
+   7   Out of memory
+   9   Subscript out of range
+   11  Division by zero
+   13  Type mismatch
+   53  File not found
+
+
+ERL
+---
+Syntax: ERL
+Purpose: Get line number of error
+Example:
+   1000 PRINT "Error at line:"; ERL
+
+
+RESUME
+------
+Syntax: RESUME [NEXT | line]
+Purpose: Continue after error
+Examples:
+   RESUME               ' Retry line that caused error
+   RESUME NEXT          ' Continue with next line
+   RESUME 100           ' Continue at line 100
+
+
+================================================================================
+                         PART III: APPENDICES
+================================================================================
+
+
+================================================================================
+                APPENDIX A: ADVANCED PROGRAMMING TECHNIQUES
+================================================================================
+
+A.1 SORTING ALGORITHMS
+----------------------
+
+Bubble Sort:
+   10 REM Bubble Sort
+   20 DIM A(100)
+   30 N = 20
+   40 REM Fill array with random numbers
+   50 FOR I = 1 TO N
+   60     A(I) = INT(RND * 100)
+   70 NEXT I
+   80 REM Bubble sort
+   90 FOR I = 1 TO N - 1
+   100     FOR J = 1 TO N - I
+   110         IF A(J) > A(J + 1) THEN
+   120             SWAP A(J), A(J + 1)
+   130         END IF
+   140     NEXT J
+   150 NEXT I
+   160 REM Display sorted array
+   170 FOR I = 1 TO N
+   180     PRINT A(I);
+   190 NEXT I
+
+
+A.2 SEARCHING ALGORITHMS
+-------------------------
+
+Linear Search:
+   10 REM Linear Search
+   20 DIM A(100)
+   30 N = 20
+   40 FOR I = 1 TO N
+   50     A(I) = I * 5
+   60 NEXT I
+   70 INPUT "Search for: ", TARGET
+   80 FOUND = 0
+   90 FOR I = 1 TO N
+   100     IF A(I) = TARGET THEN
+   110         PRINT "Found at index"; I
+   120         FOUND = -1
+   130         GOTO 160
+   140     END IF
+   150 NEXT I
+   160 IF NOT FOUND THEN PRINT "Not found"
+
+Binary Search (array must be sorted):
+   10 REM Binary Search
+   20 DIM A(100)
+   30 N = 20
+   40 FOR I = 1 TO N
+   50     A(I) = I * 5
+   60 NEXT I
+   70 INPUT "Search for: ", TARGET
+   80 LEFT = 1
+   90 RIGHT = N
+   100 FOUND = 0
+   110 WHILE LEFT <= RIGHT AND NOT FOUND
+   120     MID = INT((LEFT + RIGHT) / 2)
+   130     IF A(MID) = TARGET THEN
+   140         PRINT "Found at index"; MID
+   150         FOUND = -1
+   160     ELSE IF A(MID) < TARGET THEN
+   170         LEFT = MID + 1
+   180     ELSE
+   190         RIGHT = MID - 1
+   200     END IF
+   210 WEND
+   220 IF NOT FOUND THEN PRINT "Not found"
+
+
+A.3 MENU SYSTEMS
+----------------
+
+Professional Menu:
+   10 REM Menu System
+   20 CLS
+   30 PRINT STRING$(60, "=")
+   40 PRINT TAB(20); "MAIN MENU"
+   50 PRINT STRING$(60, "=")
+   60 PRINT
+   70 PRINT "  1. Add Record"
+   80 PRINT "  2. Delete Record"
+   90 PRINT "  3. Search Records"
+   100 PRINT "  4. Display All"
+   110 PRINT "  5. Save to File"
+   120 PRINT "  6. Exit"
+   130 PRINT
+   140 PRINT STRING$(60, "=")
+   150 INPUT "Select option (1-6): ", CHOICE
+   160 IF CHOICE < 1 OR CHOICE > 6 THEN
+   170     PRINT "Invalid choice!"
+   180     FOR I = 1 TO 1000: NEXT I
+   190     GOTO 20
+   200 END IF
+   210 ON CHOICE GOSUB 1000, 2000, 3000, 4000, 5000, 6000
+   220 IF CHOICE <> 6 THEN GOTO 20
+   230 END
+   1000 PRINT "Add Record": RETURN
+   2000 PRINT "Delete Record": RETURN
+   3000 PRINT "Search": RETURN
+   4000 PRINT "Display": RETURN
+   5000 PRINT "Save": RETURN
+   6000 PRINT "Goodbye!": RETURN
+
+
+A.4 DATA VALIDATION
+-------------------
+
+Numeric Range Validation:
+   10 REM Get valid number in range
+   20 VALID = 0
+   30 WHILE NOT VALID
+   40     INPUT "Enter number (1-10): ", N
+   50     IF N >= 1 AND N <= 10 THEN
+   60         VALID = -1
+   70     ELSE
+   80         PRINT "Invalid! Try again."
+   90     END IF
+   100 WEND
+   110 PRINT "You entered:"; N
+
+Yes/No Validation:
+   10 REM Get yes/no response
+   20 VALID = 0
+   30 WHILE NOT VALID
+   40     INPUT "Continue (Y/N): ", A$
+   50     A$ = UCASE$(LEFT$(A$, 1))
+   60     IF A$ = "Y" OR A$ = "N" THEN
+   70         VALID = -1
+   80     ELSE
+   90         PRINT "Please enter Y or N"
+   100     END IF
+   110 WEND
+
+
+A.5 STRING PARSING
+------------------
+
+Parse CSV (Comma-Separated Values):
+   10 REM Parse CSV
+   20 A$ = "John,Doe,25,NYC"
+   30 POS = 1
+   40 FOR I = 1 TO 4
+   50     COMMA = INSTR(POS, A$, ",")
+   60     IF COMMA = 0 THEN COMMA = LEN(A$) + 1
+   70     FIELD$ = MID$(A$, POS, COMMA - POS)
+   80     PRINT "Field"; I; ":"; FIELD$
+   90     POS = COMMA + 1
+   100 NEXT I
+
+
+A.6 STATISTICAL CALCULATIONS
+-----------------------------
+
+Mean and Standard Deviation:
+   10 REM Calculate statistics
+   20 DIM DATA(100)
+   30 N = 20
+   40 REM Fill with data
+   50 FOR I = 1 TO N
+   60     DATA(I) = INT(RND * 100)
+   70 NEXT I
+   80 REM Calculate mean
+   90 SUM = 0
+   100 FOR I = 1 TO N
+   110     SUM = SUM + DATA(I)
+   120 NEXT I
+   130 MEAN = SUM / N
+   140 REM Calculate standard deviation
+   150 SUMDEV = 0
+   160 FOR I = 1 TO N
+   170     DEV = DATA(I) - MEAN
+   180     SUMDEV = SUMDEV + DEV * DEV
+   190 NEXT I
+   200 STDDEV = SQR(SUMDEV / N)
+   210 PRINT "Mean:"; MEAN
+   220 PRINT "Std Dev:"; STDDEV
+
+
+A.7 GAME PROGRAMMING
+--------------------
+
+Number Guessing Game:
+   10 REM Number Guessing Game
+   20 RANDOMIZE
+   30 SECRET = INT(RND * 100) + 1
+   40 TRIES = 0
+   50 PRINT "I'm thinking of a number 1-100"
+   60 WHILE TRIES < 10
+   70     TRIES = TRIES + 1
+   80     INPUT "Your guess: ", GUESS
+   90     IF GUESS = SECRET THEN
+   100         PRINT "Correct! You won in"; TRIES; "tries!"
+   110         END
+   120     ELSE IF GUESS < SECRET THEN
+   130         PRINT "Too low!"
+   140     ELSE
+   150         PRINT "Too high!"
+   160     END IF
+   170 WEND
+   180 PRINT "Game over! The number was"; SECRET
+
+
+================================================================================
+                  APPENDIX B: COMPLETE SAMPLE PROGRAMS
+================================================================================
+
+B.1 ADDRESS BOOK
+----------------
+
+   10 REM *** ADDRESS BOOK ***
+   20 OPTION BASE 1
+   30 DIM NAMES$(100), PHONES$(100), EMAILS$(100)
+   40 NUMCONTACTS = 0
+   50 FILENAME$ = "CONTACTS.DAT"
+   60 REM Load existing contacts
+   70 GOSUB 9000
+   80 REM Main menu
+   90 CLS
+   100 PRINT STRING$(60, "=")
+   110 PRINT TAB(20); "ADDRESS BOOK"
+   120 PRINT STRING$(60, "=")
+   130 PRINT
+   140 PRINT "  1. Add Contact"
+   150 PRINT "  2. List Contacts"
+   160 PRINT "  3. Search Contacts"
+   170 PRINT "  4. Delete Contact"
+   180 PRINT "  5. Save and Exit"
+   190 PRINT
+   200 PRINT STRING$(60, "=")
+   210 INPUT "Select option: ", CHOICE
+   220 ON CHOICE GOSUB 1000, 2000, 3000, 4000, 5000
+   230 IF CHOICE <> 5 THEN GOTO 90
+   240 END
+   1000 REM Add contact
+   1010 IF NUMCONTACTS >= 100 THEN
+   1020     PRINT "Database full!"
+   1030     GOSUB 8000
+   1040     RETURN
+   1050 END IF
+   1060 NUMCONTACTS = NUMCONTACTS + 1
+   1070 PRINT
+   1080 LINE INPUT "Name: ", NAMES$(NUMCONTACTS)
+   1090 LINE INPUT "Phone: ", PHONES$(NUMCONTACTS)
+   1100 LINE INPUT "Email: ", EMAILS$(NUMCONTACTS)
+   1110 PRINT "Contact added!"
+   1120 GOSUB 8000
+   1130 RETURN
+   2000 REM List contacts
+   2010 CLS
+   2020 PRINT "CONTACT LIST"
+   2030 PRINT STRING$(60, "=")
+   2040 IF NUMCONTACTS = 0 THEN
+   2050     PRINT "No contacts"
+   2060 ELSE
+   2070     FOR I = 1 TO NUMCONTACTS
+   2080         PRINT I; ". "; NAMES$(I)
+   2090         PRINT "   Phone: "; PHONES$(I)
+   2100         PRINT "   Email: "; EMAILS$(I)
+   2110         PRINT
+   2120     NEXT I
+   2130 END IF
+   2140 GOSUB 8000
+   2150 RETURN
+   3000 REM Search contacts
+   3010 LINE INPUT "Search name: ", SEARCH$
+   3020 SEARCH$ = UCASE$(SEARCH$)
+   3030 FOUND = 0
+   3040 FOR I = 1 TO NUMCONTACTS
+   3050     IF INSTR(UCASE$(NAMES$(I)), SEARCH$) > 0 THEN
+   3060         PRINT I; ". "; NAMES$(I)
+   3070         PRINT "   Phone: "; PHONES$(I)
+   3080         PRINT "   Email: "; EMAILS$(I)
+   3090         FOUND = -1
+   3100     END IF
+   3110 NEXT I
+   3120 IF NOT FOUND THEN PRINT "No matches found"
+   3130 GOSUB 8000
+   3140 RETURN
+   4000 REM Delete contact
+   4010 GOSUB 2000
+   4020 INPUT "Delete which number (0 to cancel): ", NUM
+   4030 IF NUM < 1 OR NUM > NUMCONTACTS THEN RETURN
+   4040 FOR I = NUM TO NUMCONTACTS - 1
+   4050     NAMES$(I) = NAMES$(I + 1)
+   4060     PHONES$(I) = PHONES$(I + 1)
+   4070     EMAILS$(I) = EMAILS$(I + 1)
+   4080 NEXT I
+   4090 NUMCONTACTS = NUMCONTACTS - 1
+   4100 PRINT "Contact deleted!"
+   4110 GOSUB 8000
+   4120 RETURN
+   5000 REM Save and exit
+   5010 GOSUB 9100
+   5020 PRINT "Contacts saved. Goodbye!"
+   5030 END
+   8000 REM Pause
+   8010 PRINT
+   8020 INPUT "Press Enter to continue", DUMMY$
+   8030 RETURN
+   9000 REM Load contacts
+   9010 ON ERROR GOTO 9090
+   9020 OPEN FILENAME$ FOR INPUT AS #1
+   9030 INPUT #1, NUMCONTACTS
+   9040 FOR I = 1 TO NUMCONTACTS
+   9050     LINE INPUT #1, NAMES$(I)
+   9060     LINE INPUT #1, PHONES$(I)
+   9070     LINE INPUT #1, EMAILS$(I)
+   9080 NEXT I
+   9090 CLOSE #1
+   9100 ON ERROR GOTO 0
+   9110 RETURN
+   9120 REM Save contacts
+   9130 OPEN FILENAME$ FOR OUTPUT AS #1
+   9140 PRINT #1, NUMCONTACTS
+   9150 FOR I = 1 TO NUMCONTACTS
+   9160     PRINT #1, NAMES$(I)
+   9170     PRINT #1, PHONES$(I)
+   9180     PRINT #1, EMAILS$(I)
+   9190 NEXT I
+   9200 CLOSE #1
+   9210 RETURN
+
+
+B.2 SIMPLE DATABASE
+-------------------
+
+   10 REM *** SIMPLE DATABASE ***
+   20 OPTION BASE 1
+   30 DIM RECORDS$(100, 3)  ' Simulated 2D array
+   40 NUMRECS = 0
+   50 COLS = 3
+   60 REM Main loop
+   70 CLS
+   80 PRINT "DATABASE MENU"
+   90 PRINT "1. Add Record"
+   100 PRINT "2. Display All"
+   110 PRINT "3. Search"
+   120 PRINT "4. Exit"
+   130 INPUT "Choice: ", C
+   140 ON C GOSUB 1000, 2000, 3000
+   150 IF C <> 4 THEN GOTO 70
+   160 END
+   1000 REM Add record
+   1010 IF NUMRECS >= 100 THEN
+   1020     PRINT "Database full!"
+   1030     RETURN
+   1040 END IF
+   1050 NUMRECS = NUMRECS + 1
+   1060 INPUT "Name: ", RECORDS$(NUMRECS, 1)
+   1070 INPUT "Age: ", RECORDS$(NUMRECS, 2)
+   1080 INPUT "City: ", RECORDS$(NUMRECS, 3)
+   1090 RETURN
+   2000 REM Display all
+   2010 FOR I = 1 TO NUMRECS
+   2020     PRINT I; ". ";
+   2030     FOR J = 1 TO COLS
+   2040         PRINT RECORDS$(I, J); " ";
+   2050     NEXT J
+   2060     PRINT
+   2070 NEXT I
+   2080 INPUT "Press Enter", D$
+   2090 RETURN
+   3000 REM Search
+   3010 INPUT "Search name: ", S$
+   3020 FOR I = 1 TO NUMRECS
+   3030     IF INSTR(UCASE$(RECORDS$(I, 1)), UCASE$(S$)) > 0 THEN
+   3040         PRINT RECORDS$(I, 1); " - ";
+   3050         PRINT RECORDS$(I, 2); " - ";
+   3060         PRINT RECORDS$(I, 3)
+   3070     END IF
+   3080 NEXT I
+   3090 INPUT "Press Enter", D$
+   3100 RETURN
+
+
+B.3 TEXT ADVENTURE GAME
+-----------------------
+
+   10 REM *** TEXT ADVENTURE ***
+   20 OPTION BASE 1
+   30 DIM ROOM$(5), ITEM$(5)
+   40 REM Initialize
+   50 ROOM$(1) = "You are in a dark cave."
+   60 ROOM$(2) = "You are in a forest."
+   70 ROOM$(3) = "You are at a river."
+   80 ROOM$(4) = "You are on a mountain."
+   90 ROOM$(5) = "You are in a castle."
+   100 ITEM$(1) = "torch"
+   110 ITEM$(2) = "sword"
+   120 ITEM$(3) = "boat"
+   130 ITEM$(4) = "rope"
+   140 ITEM$(5) = "key"
+   150 LOCATION = 1
+   160 INVENTORY$ = ""
+   170 REM Game loop
+   180 CLS
+   190 PRINT ROOM$(LOCATION)
+   200 IF ITEM$(LOCATION) <> "" THEN
+   210     PRINT "You see a "; ITEM$(LOCATION); "."
+   220 END IF
+   230 PRINT
+   240 INPUT "What do you do? ", CMD$
+   250 CMD$ = UCASE$(CMD$)
+   260 IF LEFT$(CMD$, 2) = "GO" THEN GOSUB 1000
+   270 IF LEFT$(CMD$, 4) = "TAKE" THEN GOSUB 2000
+   280 IF LEFT$(CMD$, 4) = "LOOK" THEN GOTO 180
+   290 IF LEFT$(CMD$, 4) = "QUIT" THEN END
+   300 GOTO 180
+   1000 REM Movement
+   1010 IF INSTR(CMD$, "NORTH") THEN
+   1020     LOCATION = LOCATION - 1
+   1030 ELSE IF INSTR(CMD$, "SOUTH") THEN
+   1040     LOCATION = LOCATION + 1
+   1050 END IF
+   1060 IF LOCATION < 1 THEN LOCATION = 1
+   1070 IF LOCATION > 5 THEN LOCATION = 5
+   1080 RETURN
+   2000 REM Take item
+   2010 IF ITEM$(LOCATION) = "" THEN
+   2020     PRINT "Nothing to take!"
+   2030     INPUT "Press Enter", D$
+   2040     RETURN
+   2050 END IF
+   2060 INVENTORY$ = INVENTORY$ + ITEM$(LOCATION) + " "
+   2070 PRINT "Taken: "; ITEM$(LOCATION)
+   2080 ITEM$(LOCATION) = ""
+   2090 INPUT "Press Enter", D$
+   2100 RETURN
+
+
+================================================================================
+                    APPENDIX C: TROUBLESHOOTING GUIDE
+================================================================================
+
+C.1 COMMON ERRORS
+-----------------
+
+"Syntax error"
+- Check for missing keywords
+- Verify proper statement structure
+- Check for unmatched quotes
+- Ensure proper use of operators
+
+"Type mismatch"
+- Verify variable types match usage
+- Check string vs numeric operations
+- Ensure array types are consistent
+
+"Subscript out of range"
+- Check array bounds
+- Verify OPTION BASE setting
+- Ensure index is within DIM size
+
+"Division by zero"
+- Check divisor before dividing
+- Add error handling
+- Validate input data
+
+"Out of memory"
+- Reduce array sizes
+- ERASE unused arrays
+- Close unused files
+- Clear unused variables
+
+"File not found"
+- Check filename spelling
+- Verify file exists
+- Check file path
+- Ensure .BAS extension if needed
+
+"RETURN without GOSUB"
+- Verify GOSUB/RETURN pairs
+- Check program flow
+- Ensure RETURN is in subroutine
+
+"NEXT without FOR"
+- Check FOR/NEXT pairs
+- Verify loop variable names match
+- Ensure proper nesting
+
+"WEND without WHILE"
+- Check WHILE/WEND pairs
+- Verify proper nesting
+
+
+C.2 DEBUGGING TECHNIQUES
+------------------------
+
+Add PRINT statements:
+   10 X = 10
+   15 PRINT "DEBUG: X ="; X
+   20 Y = X * 2
+   25 PRINT "DEBUG: Y ="; Y
+
+Use STOP to pause:
+   10 X = 10
+   20 STOP
+   30 PRINT X
+
+Trace variable values:
+   10 FOR I = 1 TO 10
+   20     PRINT "I ="; I
+   30     ' Your code
+   40 NEXT I
+
+Check array bounds:
+   10 DIM A(10)
+   20 PRINT "LBOUND:"; LBOUND(A)
+   30 PRINT "UBOUND:"; UBOUND(A)
+
+
+C.3 PERFORMANCE TIPS
+--------------------
+
+Use integer variables when possible:
+   ' Slow:
+   FOR I = 1 TO 1000
+   
+   ' Faster:
+   FOR I% = 1 TO 1000
+
+Minimize operations in loops:
+   ' Slow:
+   FOR I = 1 TO 1000
+       RESULT = I * 3.14159 / 2
+   NEXT I
+   
+   ' Faster:
+   CONSTANT = 3.14159 / 2
+   FOR I = 1 TO 1000
+       RESULT = I * CONSTANT
+   NEXT I
+
+Use ERASE for large arrays:
+   DIM TEMP(10000)
+   ' Use array
+   ERASE TEMP
+
+
+================================================================================
+                       APPENDIX D: ASCII REFERENCE
+================================================================================
+
+D.1 PRINTABLE CHARACTERS
+-------------------------
+
+Dec  Char | Dec  Char | Dec  Char | Dec  Char
+-----|-----|-----|-----
+ 32  Space|  64  @   |  96  `   | 128  Ç
+ 33  !    |  65  A   |  97  a   | 129  ü
+ 34  "    |  66  B   |  98  b   | 130  é
+ 35  #    |  67  C   |  99  c   | 131  â
+ 36  $    |  68  D   | 100  d   | 132  ä
+ 37  %    |  69  E   | 101  e   | 133  à
+ 38  &    |  70  F   | 102  f   | 134  å
+ 39  '    |  71  G   | 103  g   | 135  ç
+ 40  (    |  72  H   | 104  h   | 136  ê
+ 41  )    |  73  I   | 105  i   | 137  ë
+ 42  *    |  74  J   | 106  j   | 138  è
+ 43  +    |  75  K   | 107  k   | 139  ï
+ 44  ,    |  76  L   | 108  l   | 140  î
+ 45  -    |  77  M   | 109  m   | 141  ì
+ 46  .    |  78  N   | 110  n   | 142  Ä
+ 47  /    |  79  O   | 111  o   | 143  Å
+ 48  0    |  80  P   | 112  p   | 144  É
+ 49  1    |  81  Q   | 113  q   | 145  æ
+ 50  2    |  82  R   | 114  r   | 146  Æ
+ 51  3    |  83  S   | 115  s   | 147  ô
+ 52  4    |  84  T   | 116  t   | 148  ö
+ 53  5    |  85  U   | 117  u   | 149  ò
+ 54  6    |  86  V   | 118  v   | 150  û
+ 55  7    |  87  W   | 119  w   | 151  ù
+ 56  8    |  88  X   | 120  x   | 152  ÿ
+ 57  9    |  89  Y   | 121  y   | 153  Ö
+ 58  :    |  90  Z   | 122  z   | 154  Ü
+ 59  ;    |  91  [   | 123  {   | 155  ¢
+ 60  <    |  92  \   | 124  |   | 156  £
+ 61  =    |  93  ]   | 125  }   | 157  ¥
+ 62  >    |  94  ^   | 126  ~   | 158  ₧
+ 63  ?    |  95  _   | 127  ⌂   | 159  ƒ
+
+
+D.2 CONTROL CHARACTERS
+----------------------
+
+Dec  Name          Purpose
+---  ----          -------
+  0  NUL           Null
+  7  BEL           Bell (beep)
+  8  BS            Backspace
+  9  TAB           Tab
+ 10  LF            Line feed
+ 13  CR            Carriage return
+ 27  ESC           Escape
+
+
+D.3 COMMON USES
+---------------
+
+Beep:
+   PRINT CHR$(7)
+
+Newline:
+   PRINT "Line 1" + CHR$(13) + CHR$(10) + "Line 2"
+
+Tab:
+   PRINT "Column 1" + CHR$(9) + "Column 2"
+
+
+================================================================================
+                    APPENDIX E: QUICK REFERENCE CARD
+================================================================================
+
+SYSTEM COMMANDS
+---------------
+NEW             Clear program
+LIST            Display program
+RUN             Execute program
+EXIT            Quit interpreter
+LOAD "file"     Load program
+SAVE "file"     Save program
+FILES           List .BAS files
+KILL "file"     Delete file
+NAME "old" AS "new"  Rename file
+
+PROGRAM CONTROL
+---------------
+GOTO line       Jump to line
+GOSUB line      Call subroutine
+RETURN          Return from subroutine
+ON x GOTO ...   Computed GOTO
+ON x GOSUB ...  Computed GOSUB
+END             End program
+STOP            Stop with message
+
+CONDITIONALS
+------------
+IF cond THEN statement
+IF cond THEN stmt ELSE stmt
+IF cond THEN GOTO line
+
+LOOPS
+-----
+FOR var = start TO end [STEP inc]
+NEXT [var]
+
+WHILE condition
+WEND
+
+INPUT/OUTPUT
+------------
+PRINT expr      Display output
+? expr          Same as PRINT
+INPUT var       Get input
+INPUT "prompt"; var
+LINE INPUT var$
+
+ARRAYS
+------
+DIM array(size)
+OPTION BASE n
+LBOUND(array)
+UBOUND(array)
+ERASE array
+
+FILES
+-----
+OPEN "file" FOR mode AS #n
+CLOSE [#n]
+INPUT #n, var
+LINE INPUT #n, var$
+PRINT #n, expr
+WRITE #n, expr
+EOF(n)
+LOF(n)
+LOC(n)
+
+MATH FUNCTIONS
+--------------
+ABS(x)          Absolute value
+INT(x)          Integer part
+SQR(x)          Square root
+SIN(x), COS(x), TAN(x)
+ATN(x)          Arctangent
+EXP(x)          e^x
+LOG(x)          Natural log
+RND             Random 0-1
+SGN(x)          Sign
+
+STRING FUNCTIONS
+----------------
+LEN(s$)         Length
+LEFT$(s$,n)     Left n chars
+RIGHT$(s$,n)    Right n chars
+MID$(s$,start[,len])
+INSTR([start,]s1$,s2$)
+CHR$(n)         ASCII to char
+ASC(s$)         Char to ASCII
+STR$(n)         Number to string
+VAL(s$)         String to number
+LCASE$(s$)      To lowercase
+UCASE$(s$)      To uppercase
+STRING$(n,c$)   Repeat char
+SPACE$(n)       n spaces
+
+OPERATORS
+---------
++  -  *  /      Arithmetic
+^               Power
+\               Integer division
+MOD             Modulo
+=  <>  <  >  <=  >=  Comparison
+AND  OR  NOT    Logical
+XOR  EQV  IMP
+
+VARIABLE TYPES
+--------------
+!  Single-precision (default)
+#  Double-precision
+%  Integer
+&  Long integer
+$  String
+
+ERROR HANDLING
+--------------
+ON ERROR GOTO line
+ERROR n
+ERR             Error code
+ERL             Error line
+RESUME [NEXT | line]
+
+
+================================================================================
+                    APPENDIX F: KEYBOARD SHORTCUTS
+================================================================================
+
+DURING PROGRAM EXECUTION
+------------------------
+Ctrl+C          Stop program (BREAK)
+                Returns to command prompt
+                Does NOT exit interpreter
+
+AT COMMAND PROMPT
+-----------------
+Ctrl+D          End of input (system dependent)
+Enter           Execute command
+Up Arrow        Command history (if supported)
+Down Arrow      Command history (if supported)
+
+EDITING TIPS
+------------
+- To edit a line: Retype with same line number
+- To delete a line: Type just the line number
+- To insert: Use number between existing lines
+- Number by 10s to leave room for insertions
+
+PROGRAM ORGANIZATION
+--------------------
+10-90       Initialization
+100-900     Main program
+1000+       Subroutines (1000 per routine)
+8000-8999   Utility routines
+9000-9999   Data/file I/O
+
+
+================================================================================
+                              END OF MANUAL
+================================================================================
+
+Thank you for using MS-BASIC Interpreter v4.0!
+
+For questions or issues, refer to the troubleshooting guide in Appendix C.
+
+Happy Programming!
+
+Press Ctrl+C to stop any running program without exiting the interpreter.
+
+================================================================================
